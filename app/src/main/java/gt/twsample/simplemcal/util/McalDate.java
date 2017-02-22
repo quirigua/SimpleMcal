@@ -3,6 +3,7 @@ package gt.twsample.simplemcal.util;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -49,40 +50,47 @@ public class McalDate {
     public void gmt_584285(){ gmt = GMT_584285; }
 
     public String toLongCount(){
+//      final long base  = (long)jd - gmt;
+//      final int piktun = (int)(base / PIKTUN_BASE);
+//      long baktun      = (int)(base % PIKTUN_BASE / BAKTUN_BASE);
+//      final int katun  = (int)(base % BAKTUN_BASE / KATUN_BASE);
+//      final int tun    = (int)(base % KATUN_BASE / TUN_BASE);
+//      final int winal  = (int)(base % TUN_BASE / WINAL_BASE);
+//      final int kin    = (int)(base % WINAL_BASE);
+//      if(piktun == 1){ baktun = BAKTUN_MAX; }
+        final int[] long_count = toLongCountAsArray();
+        // piktunは表示せず、それ以外の5つを文字列整形して返す
+        return long_count_format.format(
+                new Object[]{long_count[1], long_count[2], long_count[3],
+                        long_count[4], long_count[5]});
+    }
+
+    public int[] toLongCountAsArray() {
         final long base  = (long)jd - gmt;
         final int piktun = (int)(base / PIKTUN_BASE);
-        long baktun      = (int)(base % PIKTUN_BASE / BAKTUN_BASE);
+        int baktun       = (int)(base % PIKTUN_BASE / BAKTUN_BASE);
         final int katun  = (int)(base % BAKTUN_BASE / KATUN_BASE);
         final int tun    = (int)(base % KATUN_BASE / TUN_BASE);
         final int winal  = (int)(base % TUN_BASE / WINAL_BASE);
         final int kin    = (int)(base % WINAL_BASE);
         if(piktun == 1){ baktun = BAKTUN_MAX; }
-        return long_count_format.format(new Object[]{baktun, katun, tun, winal, kin});
-        // return String.format("%d.%d.%d.%d.%d", baktun, katun, tun, winal, kin);
+        return new int[]{piktun, baktun, katun, tun, winal, kin};
     }
 
-    public void previous(int added) {
-        this.update(-added);
-    }
-
-    public void next(int added) {
-        this.update(added);
-    }
+    public void previous_one() { this.update(-1); }
+    public void next_one() { this.update(1); }
 
     public String toTzolkin(){
         final long base = (long)jd - gmt;
         final int tmonth = TZOLKIN_MONTH[(int)((base + TZOLKIN_MONTH_HOSEI) % TZOLKIN_MONTH.length)];
         final String tdate  = TZOLKIN_DATE[(int)((base + TZOLKIN_DATE_HOSEI) % TZOLKIN_DATE.length)];
         return tzolkin_format.format(new Object[]{tmonth, tdate});
-        // return String.format("%d-%s", tmonth, tdate);
     }
 
     public String toGDate() {
         final String wday = WEEK_DAYS[cal.get(Calendar.DAY_OF_WEEK)-1];
         return String.format(Locale.US, "%d-%d-%d(%s)",
                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DATE), wday);
-        //SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd(E)", new Locale("es"));
-        //return f.format(cal.getTime());
     }
     public String toMDate() {
         StringBuilder sb = new StringBuilder();
@@ -95,9 +103,24 @@ public class McalDate {
     }
 
     public void updateBaseDate(int year, int month, int date){
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DATE, date);
+        // cal.set(Calendar.YEAR, year);
+        // cal.set(Calendar.MONTH, month-1);
+        // cal.set(Calendar.DATE, date);
+        this.cal = new GregorianCalendar(year, month-1, date);
+        CalUtil.updateCalToNoon(this.cal);
+        update(0);
+    }
+
+    public void updateBaseDateByLongCount(
+            int piktun, int baktun, int katun, int tun, int winal, int kin){
+        final long base_days = PIKTUN_BASE * piktun + BAKTUN_BASE * baktun
+            + KATUN_BASE * katun + TUN_BASE * tun
+            + WINAL_BASE * winal + kin;
+        final double j_base = Math.ceil(JULIAN_CONSTANT+0.5);
+        final long java_day_base = base_days + this.gmt - new Double(j_base).longValue();
+        final Date d = new Date(java_day_base * (24*60*60*1000));
+        this.cal.setTime(d);
+        CalUtil.updateCalToNoon(this.cal);
         update(0);
     }
 
