@@ -36,6 +36,9 @@ public class DatePickerDialogFragment extends DialogFragment
         int day   = getArguments().getInt("day");
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
+    // カレンダーから戻った時
+    // 表示の日付を更新する
+    // 下部のテキストボックスの日付を更新する
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         final Calendar cal = new GregorianCalendar(year, month, dayOfMonth);
