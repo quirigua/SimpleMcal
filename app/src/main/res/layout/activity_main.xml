@@ -29,19 +29,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/previous"
-            android:text="previous"/>
+            android:text="prev"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/next"
             android:text="next"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="#1e90ff"
-        android:id="@+id/picking_date" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,24 +51,123 @@
             android:id="@+id/input_year"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/border" />
+            android:background="@drawable/border"
+            android:gravity="right"/>
         <EditText
             android:id="@+id/input_month"
-            android:layout_width="50dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/border" />
+            android:background="@drawable/border"
+            android:gravity="right"/>
         <EditText
             android:id="@+id/input_date"
-            android:layout_width="50dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/border" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/set_free_year"
+            android:text="Update Date"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <EditText
+            android:id="@+id/input_piktun"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#1e90ff"
+            android:id="@+id/piktun_period"
+            android:text="."/>
+        <EditText
+            android:id="@+id/input_baktun"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#1e90ff"
+            android:id="@+id/baktun_period"
+            android:text="@string/period"/>
+        <EditText
+            android:id="@+id/input_katun"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#1e90ff"
+            android:id="@+id/katun_period"
+            android:text="@string/period"/>
+        <EditText
+            android:id="@+id/input_tun"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#1e90ff"
+            android:id="@+id/tun_period"
+            android:text="@string/period"/>
+        <EditText
+            android:id="@+id/input_winal"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#1e90ff"
+            android:id="@+id/winal_period"
+            android:text="@string/period"/>
+        <EditText
+            android:id="@+id/input_kin"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/border"
+            android:gravity="right"/>
     </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/set_free_year"
-        android:text="Update Date"/>
+        android:id="@+id/set_long_count"
+        android:text="Update by Long Count"/>
 </LinearLayout>
