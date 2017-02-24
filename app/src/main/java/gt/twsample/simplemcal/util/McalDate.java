@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -18,6 +19,12 @@ public class McalDate {
             "Chuwen", "Eb", "Ben", "Ix", "Men",
             "Kib", "Kaban", "Etz'nab", "Kawak", "Ajaw"};
     private static final int[] TZOLKIN_MONTH = {1,2,3,4,5,6,7,8,9,10,11,12,13};
+    private static final String[] HAAB_MONTH = {
+            "Pop", "Wo", "Sip", "Sots", "Sek", "Xul",
+            "Yaxk'in", "Mol", "Che'n", "Yax", "Sak", "Keh",
+            "Mak", "K'ank'in", "Muwan", "Pax", "K'ayab", "Kumk'u"};
+    private static final int[] HAAB_DAYS = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+    private static final int[] WAYEB_DAYS = {1,2,3,4,5};
     private static final String[] WEEK_DAYS = {
             "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
     private static final double JULIAN_CONSTANT = 2440587; // 2440587.5
@@ -31,12 +38,14 @@ public class McalDate {
     private static final long PIKTUN_BASE = BAKTUN_MAX * BAKTUN_BASE;
     private static final long TZOLKIN_MONTH_HOSEI = 3;
     private static final long TZOLKIN_DATE_HOSEI = 19;
+    private static final long HAAB_DAY_COUNT = 365;
 
     private Calendar cal;
     private double jd;
     private long gmt;
     private MessageFormat long_count_format = new MessageFormat("{0}.{1}.{2}.{3}.{4}");
     private MessageFormat tzolkin_format = new MessageFormat("{0}-{1}");
+    private MessageFormat haab_format    = new MessageFormat("{0}-{1}");
 
     public McalDate(Calendar cal){
         CalUtil.updateCalToNoon(cal);
@@ -50,14 +59,6 @@ public class McalDate {
     public void gmt_584285(){ gmt = GMT_584285; }
 
     public String toLongCount(){
-//      final long base  = (long)jd - gmt;
-//      final int piktun = (int)(base / PIKTUN_BASE);
-//      long baktun      = (int)(base % PIKTUN_BASE / BAKTUN_BASE);
-//      final int katun  = (int)(base % BAKTUN_BASE / KATUN_BASE);
-//      final int tun    = (int)(base % KATUN_BASE / TUN_BASE);
-//      final int winal  = (int)(base % TUN_BASE / WINAL_BASE);
-//      final int kin    = (int)(base % WINAL_BASE);
-//      if(piktun == 1){ baktun = BAKTUN_MAX; }
         final int[] long_count = toLongCountAsArray();
         // piktunは表示せず、それ以外の5つを文字列整形して返す
         return long_count_format.format(
@@ -87,6 +88,22 @@ public class McalDate {
         return tzolkin_format.format(new Object[]{tmonth, tdate});
     }
 
+    public String toHaab() {
+        final long base = (long)jd - gmt + 347;
+        final int day_position = (int)(base % HAAB_DAY_COUNT);
+        String hmonth = null;
+        int hday = 0;
+        if(day_position >= 360) {
+            //WAYEB
+            hmonth = "Wayeb";
+            hday   = WAYEB_DAYS[day_position - 360];
+        } else {
+            hmonth = HAAB_MONTH[day_position / 20];
+            hday   = HAAB_DAYS[day_position % 20];
+        }
+        return haab_format.format(new Object[]{hday, hmonth});
+    }
+
     public String toGDate() {
         final String wday = WEEK_DAYS[cal.get(Calendar.DAY_OF_WEEK)-1];
         return String.format(Locale.US, "%d-%d-%d(%s)",
@@ -94,7 +111,8 @@ public class McalDate {
     }
     public String toMDate() {
         StringBuilder sb = new StringBuilder();
-        return sb.append(this.toLongCount()).append(" : ").append(this.toTzolkin()).toString();
+        return sb.append(this.toLongCount()).append(" : ").append(this.toTzolkin())
+                .append("/").append(this.toHaab()).toString();
     }
 
     public void updateBaseDate(Calendar cal){
@@ -103,10 +121,9 @@ public class McalDate {
     }
 
     public void updateBaseDate(int year, int month, int date){
-        // cal.set(Calendar.YEAR, year);
-        // cal.set(Calendar.MONTH, month-1);
-        // cal.set(Calendar.DATE, date);
-        this.cal = new GregorianCalendar(year, month-1, date);
+        final GregorianCalendar g = new GregorianCalendar(year, month-1, date);
+        g.setGregorianChange(new Date(Long.MIN_VALUE));
+        this.cal = g;
         CalUtil.updateCalToNoon(this.cal);
         update(0);
     }
@@ -122,6 +139,16 @@ public class McalDate {
         this.cal.setTime(d);
         CalUtil.updateCalToNoon(this.cal);
         update(0);
+    }
+
+    public void updateBaseDateByLongCount(List<Integer> long_count_list) {
+        updateBaseDateByLongCount(
+                long_count_list.get(0),
+                long_count_list.get(1),
+                long_count_list.get(2),
+                long_count_list.get(3),
+                long_count_list.get(4),
+                long_count_list.get(5) );
     }
 
     public void updateBaseYear(int year){
