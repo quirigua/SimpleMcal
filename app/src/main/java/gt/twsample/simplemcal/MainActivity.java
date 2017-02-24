@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import gt.twsample.simplemcal.util.McalDate;
 
@@ -26,10 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
         g_date = (TextView)findViewById(R.id.gregorian_date);
         m_date = (TextView)findViewById(R.id.mcal_date);
-        mcal = new McalDate(GregorianCalendar.getInstance());
+        final GregorianCalendar g = new GregorianCalendar();
+        g.setGregorianChange(new Date(Long.MIN_VALUE));
+        mcal = new McalDate(g);
         g_date.setText(mcal.toGDate());
-        final StringBuilder sb = new StringBuilder();
-        m_date.setText(sb.append(mcal.toLongCount()).append(" : ").append(mcal.toTzolkin()));
+        m_date.setText(mcal.toMDate());
 
         // Set Calendar Date to Free Date Input
         setInputFreeDate(mcal.getCal());
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         Button set_free_year = (Button)findViewById(R.id.set_free_year);
         // テキスト入力の長期暦を反映するボタン
         Button set_long_count = (Button)findViewById(R.id.set_long_count);
+        // テキスト入力の長期暦(全)を反映するボタン
+        Button set_all_long_count = (Button)findViewById(R.id.set_all_long_count);
 
         // 1日前ボタン
         // * 表示を1日前にする
@@ -86,8 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 Editable free_year  = input_year.getText();
                 Editable free_month = input_month.getText();
                 Editable free_date  = input_date.getText();
+                int year = Integer.parseInt(free_year.toString());
+                if(year< 0){ year++; }
                 mcal.updateBaseDate(
-                    Integer.parseInt(free_year.toString()),
+                    year,
                     Integer.parseInt(free_month.toString()),
                     Integer.parseInt(free_date.toString())
                 );
@@ -113,6 +122,32 @@ public class MainActivity extends AppCompatActivity {
                 final int kin    = Integer.parseInt(input_kin.getText().toString());
                 mcal.updateBaseDateByLongCount(
                     piktun, baktun, katun, tun, winal, kin);
+                g_date.setText(mcal.toGDate());
+                m_date.setText(mcal.toMDate());
+            }
+        });
+        set_all_long_count.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                final EditText input_long_count = (EditText)findViewById(R.id.input_long_count);
+                final String long_count = input_long_count.getText().toString();
+                String[] long_count_array = long_count.split(Pattern.quote("."));
+                List<Integer> long_count_list = new ArrayList<Integer>();
+                // TODO 実装中
+                for(int i = 0; i < long_count_array.length; i++) {
+                    long_count_list.add(Integer.parseInt(long_count_array[i]));
+                }
+                // piktunの桁が入力されていなかった場合
+                if(long_count_list.size() == 5) {
+                    if (long_count_list.get(0) == 13) {
+                        long_count_list.set(0, 0);
+                        long_count_list.add(0, 1);
+                    } else {
+                        long_count_list.add(0, 0);
+                    }
+                }
+                // カレンダーをアップデート
+                mcal.updateBaseDateByLongCount(long_count_list);
                 g_date.setText(mcal.toGDate());
                 m_date.setText(mcal.toMDate());
             }
