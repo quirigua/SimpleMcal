@@ -52,6 +52,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <EditText
             android:id="@+id/input_month"
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <EditText
             android:id="@+id/input_date"
@@ -66,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
 
         <Button
@@ -88,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <TextView
             android:layout_width="wrap_content"
@@ -103,6 +107,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="3dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <TextView
             android:layout_width="wrap_content"
@@ -118,6 +123,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="3dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <TextView
             android:layout_width="wrap_content"
@@ -133,6 +139,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="3dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <TextView
             android:layout_width="wrap_content"
@@ -148,6 +155,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="3dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
         <TextView
             android:layout_width="wrap_content"
@@ -162,6 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:gravity="right"/>
     </LinearLayout>
 
@@ -177,6 +186,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:background="@drawable/border"
+        android:inputType="text"
         android:gravity="right"/>
 
     <Button

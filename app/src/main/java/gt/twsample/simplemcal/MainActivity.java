@@ -1,5 +1,7 @@
 package gt.twsample.simplemcal;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -134,23 +136,26 @@ public class MainActivity extends AppCompatActivity {
                 final String long_count = input_long_count.getText().toString();
                 String[] long_count_array = long_count.split(Pattern.quote("."));
                 List<Integer> long_count_list = new ArrayList<Integer>();
-                // TODO 実装中
-                for(int i = 0; i < long_count_array.length; i++) {
-                    // piktunの桁が入力されていなかった場合
-                    if(i == 0 && long_count_array.length == 5) {
-                        if (long_count_array[0] == "13") {
-                            long_count_list.add(1);
-                        } else {
-                            long_count_list.add(0);
+                try {
+                    for (int i = 0; i < long_count_array.length; i++) {
+                        // piktunの桁が入力されていなかった場合
+                        if (i == 0 && long_count_array.length == 5) {
+                            if (long_count_array[0] == "13") {
+                                long_count_list.add(1);
+                            } else {
+                                long_count_list.add(0);
+                            }
                         }
+                        long_count_list.add(Integer.parseInt(long_count_array[i]));
                     }
-                    long_count_list.add(Integer.parseInt(long_count_array[i]));
-                }
 
-                // カレンダーをアップデート
-                mcal.updateBaseDateByLongCount(long_count_list);
-                g_date.setText(mcal.toGDate());
-                m_date.setText(mcal.toMDate());
+                    // カレンダーをアップデート
+                    mcal.updateBaseDateByLongCount(long_count_list);
+                    g_date.setText(mcal.toGDate());
+                    m_date.setText(mcal.toMDate());
+                }catch (NumberFormatException ex) {
+                    showAlertDialog("数値と.のみ入力可");
+                }
             }
         });
     }
@@ -189,5 +194,13 @@ public class MainActivity extends AppCompatActivity {
         input_tun.setText(String.valueOf(long_count_array[3]));
         input_winal.setText(String.valueOf(long_count_array[4]));
         input_kin.setText(String.valueOf(long_count_array[5]));
+    }
+
+    public void showAlertDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .show();
     }
 }
