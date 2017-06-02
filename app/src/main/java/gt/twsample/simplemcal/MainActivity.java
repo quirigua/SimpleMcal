@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 m_date.setText(mcal.toMDate());
             }
         });
+
         set_long_count.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -135,17 +136,17 @@ public class MainActivity extends AppCompatActivity {
                 List<Integer> long_count_list = new ArrayList<Integer>();
                 // TODO 実装中
                 for(int i = 0; i < long_count_array.length; i++) {
+                    // piktunの桁が入力されていなかった場合
+                    if(i == 0 && long_count_array.length == 5) {
+                        if (long_count_array[0] == "13") {
+                            long_count_list.add(1);
+                        } else {
+                            long_count_list.add(0);
+                        }
+                    }
                     long_count_list.add(Integer.parseInt(long_count_array[i]));
                 }
-                // piktunの桁が入力されていなかった場合
-                if(long_count_list.size() == 5) {
-                    if (long_count_list.get(0) == 13) {
-                        long_count_list.set(0, 0);
-                        long_count_list.add(0, 1);
-                    } else {
-                        long_count_list.add(0, 0);
-                    }
-                }
+
                 // カレンダーをアップデート
                 mcal.updateBaseDateByLongCount(long_count_list);
                 g_date.setText(mcal.toGDate());

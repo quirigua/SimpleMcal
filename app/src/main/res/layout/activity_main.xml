@@ -170,4 +170,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/set_long_count"
         android:text="Update by Long Count"/>
+
+    <EditText
+        android:id="@+id/input_long_count"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/border"
+        android:gravity="right"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/set_all_long_count"
+        android:text="Update by Long Count"/>
 </LinearLayout>
