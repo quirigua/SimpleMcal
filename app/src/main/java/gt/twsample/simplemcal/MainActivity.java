@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Calendar Date to Free Date Input
         setInputFreeDate(mcal.getCal());
-        setInputLongCount(mcal.toLongCountAsArray());
+        // setInputLongCount(mcal.toLongCountAsArray());
 
         // buttons
         // 1日戻すボタン
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         // テキスト入力の年月日を反映するボタン
         Button set_free_year = (Button)findViewById(R.id.set_free_year);
         // テキスト入力の長期暦を反映するボタン
-        Button set_long_count = (Button)findViewById(R.id.set_long_count);
+        // Button set_long_count = (Button)findViewById(R.id.set_long_count);
         // テキスト入力の長期暦(全)を反映するボタン
         Button set_all_long_count = (Button)findViewById(R.id.set_all_long_count);
 
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         set_long_count.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -129,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 m_date.setText(mcal.toMDate());
             }
         });
+*/
+
         set_all_long_count.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -181,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         input_month.setText(String.valueOf((cal.get(Calendar.MONTH)+1)));
         input_date.setText(String.valueOf(cal.get(Calendar.DATE)));
     }
+    /*
     public void setInputLongCount(int[] long_count_array) {
         final EditText input_piktun = (EditText)findViewById(R.id.input_piktun);
         final EditText input_baktun = (EditText)findViewById(R.id.input_baktun);
@@ -195,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         input_winal.setText(String.valueOf(long_count_array[4]));
         input_kin.setText(String.valueOf(long_count_array[5]));
     }
+    */
 
     public void showAlertDialog(String message) {
         new AlertDialog.Builder(this)

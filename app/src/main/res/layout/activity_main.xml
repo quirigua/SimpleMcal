@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:background="#ccffff"
     tools:context="gt.twsample.simplemcal.MainActivity">
 
@@ -80,6 +80,7 @@
 
     </LinearLayout>
 
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -179,7 +180,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/set_long_count"
         android:text="Update by Long Count"/>
+    -->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
     <EditText
         android:id="@+id/input_long_count"
         android:layout_width="125dp"
@@ -192,6 +199,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:id="@+id/set_all_long_count"
-        android:text="Update by Long Count"/>
+        android:text="by Long Count"/>
+    </LinearLayout>
 </LinearLayout>
