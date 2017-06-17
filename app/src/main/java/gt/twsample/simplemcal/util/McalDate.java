@@ -52,7 +52,7 @@ public class McalDate {
         this.cal = cal;
         long milli_time = cal.getTimeInMillis();
         this.jd = (Math.ceil(milli_time/(24.0*60*60*1000)) + JULIAN_CONSTANT);
-        this.gmt = GMT_584283;
+        this.gmt = GMT_584285;
     }
 
     public void gmt_584283(){ gmt = GMT_584283; }

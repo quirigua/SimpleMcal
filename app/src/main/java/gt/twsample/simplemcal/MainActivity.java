@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         // Button set_long_count = (Button)findViewById(R.id.set_long_count);
         // テキスト入力の長期暦(全)を反映するボタン
         Button set_all_long_count = (Button)findViewById(R.id.set_all_long_count);
+        // 長期暦の基準をGMT584283に変更するボタン
+        //Button set_gmt_584283 = (Button)findViewById(R.id.to_gmt584283);
+        // 長期暦の基準をGMT584285に変更するボタン
+        //Button set_gmt_584285 = (Button)findViewById(R.id.to_gmt584285);
 
         // 1日前ボタン
         // * 表示を1日前にする
@@ -161,7 +165,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // 長期歴の基準とGMT-584283に変更
+//      set_gmt_584283.setOnClickListener(new View.OnClickListener(){
+//          @Override
+//          public void onClick(View v) {
+//              mcal.gmt_584283();
+//              g_date.setText(mcal.toGDate());
+//              m_date.setText(mcal.toMDate());
+//          }
+//      });
+
+        // 長期歴の基準とGMT-584285に変更
+//      set_gmt_584285.setOnClickListener(new View.OnClickListener(){
+//          @Override
+//          public void onClick(View v) {
+//              mcal.gmt_584285();
+//              g_date.setText(mcal.toGDate());
+//              m_date.setText(mcal.toMDate());
+//          }
+//      });
     }
+
     public void setCalendarToAll(){
         g_date.setText(mcal.toGDate());
         m_date.setText(mcal.toMDate());
