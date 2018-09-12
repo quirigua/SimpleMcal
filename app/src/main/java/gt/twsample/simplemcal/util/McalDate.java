@@ -1,7 +1,6 @@
 package gt.twsample.simplemcal.util;
 
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
